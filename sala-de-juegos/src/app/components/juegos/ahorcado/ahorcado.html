@@ -1,34 +1,47 @@
-<div class="ahorcado-container">
-    <h2>El Ahorcado</h2>
-
-    <div class="status-panel">
-        <p>Intentos Restantes: <strong>{{ intentosRestantes }}</strong></p>
-        <p class="mensaje-juego">{{ mensaje }}</p>
-    </div>
-
-    <h1 class="palabra-secreta">
-        {{ palabraMostrada.join(' ') }}
-    </h1>
-
-    <div class="imagen-ahorcado">
-    <img [src]="'assets/ahorcado/hangman-' + (6 - intentosRestantes) + '.svg'" alt="Imagen del ahorcado">
-    </div>
-
-    <div class="botones-letras">
-        <button 
-            *ngFor="let letra of abecedario"
-            (click)="adivinarLetra(letra)"
-            [disabled]="letrasUsadas.includes(letra) || intentosRestantes <= 0 || mensaje.includes('Ganaste')"
-            [class.usada]="letrasUsadas.includes(letra)"
-        >
-            {{ letra }}
+<div class="overlay" *ngIf="juegoTerminado">
+  <div class="card text-center shadow-lg">
+    <div class="card-body">
+      <h1 class="card-title mb-4">{{ mensaje }}</h1>
+      <div class="d-grid gap-3">
+        <button (click)="iniciarJuego()" class="btn btn-success btn-lg">
+          Jugar de Nuevo
         </button>
+        <button [routerLink]="['/home']" class="btn btn-secondary btn-lg">
+          Volver al Home
+        </button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <button (click)="iniciarJuego()" class="btn-reiniciar">
-        Reiniciar Juego
-    </button>
-    <button [routerLink]="['/home']" class="btn-volver">
-        Volver al Home
-    </button>
+<div class="container text-center py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <h2 class="mb-3">Juego del Ahorcado</h2>
+
+      <div class="imagen-ahorcado mb-4">
+        <img [src]="'assets/ahorcado/hangman-' + (6 - intentosRestantes) + '.svg'" alt="Imagen del ahorcado">
+      </div>
+
+      <h1 class="palabra-secreta mb-4">{{ palabraMostrada.join(' ') }}</h1>
+
+      <div class="botones-letras mb-4">
+        <button
+          *ngFor="let letra of abecedario"
+          (click)="adivinarLetra(letra)"
+          [disabled]="letrasUsadas.includes(letra) || juegoTerminado"
+          [class.usada]="letrasUsadas.includes(letra)"
+          class="btn btn-outline-primary m-1"
+        >
+          {{ letra }}
+        </button>
+      </div>
+
+      <div class="alert alert-info">
+        <p class="m-0">Intentos Restantes: <strong>{{ intentosRestantes }}</strong></p>
+      </div>
+
+    </div>
+  </div>
 </div>

@@ -1,17 +1,32 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login';
 import { RegistroComponent } from './components/registro/registro.component';
-import { HomeComponent } from './components/home/home';
-import { authGuard } from './guards/auth-guard'; 
-import { AhorcadoComponent } from './components/juegos/ahorcado/ahorcado.component'; 
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'registro', component: RegistroComponent }, 
-    { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+    { path: 'registro', component: RegistroComponent },
+    {
+        path: 'home',
+        loadComponent: () => import('./components/home/home').then(m => m.HomeComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'quien-soy',
+        loadComponent: () => import('./components/quien-soy/quien-soy').then(m => m.QuienSoyComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'juego/ahorcado',
+        loadComponent: () => import('./components/juegos/ahorcado/ahorcado.component').then(m => m.AhorcadoComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'juego/mayor-menor',
+        loadComponent: () => import('./components/juegos/mayor-menor/mayor-menor').then(m => m.MayorMenorComponent),
+        canActivate: [authGuard]
+    },
 
-    { path: 'juego/ahorcado', component: AhorcadoComponent, canActivate: [authGuard] }, 
-
-    { path: '', redirectTo: '/home', pathMatch: 'full' }, 
-    { path: '**', redirectTo: '/home' },
+    { path: '', redirectTo: '/login', pathMatch: 'full' }, 
+    { path: '**', redirectTo: '/login' }, 
 ];

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { supabase } from './supabase.service'; 
+import { supabase } from './supabase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,7 @@ export class AuthService {
   async logout() {
     return await supabase.auth.signOut();
   }
+
   async registrarLog(userEmail: string, userId: string) {
     return await supabase
       .from('logs_ingreso')
@@ -33,5 +34,22 @@ export class AuthService {
         user_id: userId,
         fecha_ingreso: new Date().toISOString()
       });
+  }
+  async guardarResultado(juego: string, puntaje: number, gano: boolean) {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (session?.user) {
+      return await supabase
+        .from('resultados')
+        .insert({
+          user_id: session.user.id,
+          user_email: session.user.email,
+          juego: juego,       
+          puntaje: puntaje,   
+          victoria: gano, 
+          fecha_juego: new Date().toISOString()
+        });
+    }
+    return null;
   }
 }

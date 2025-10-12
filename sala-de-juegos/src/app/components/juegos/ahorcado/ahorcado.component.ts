@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
-import { Router, RouterModule } from '@angular/router'; 
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service'; 
 
 @Component({
   selector: 'app-ahorcado',
@@ -10,19 +11,20 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./ahorcado.scss']
 })
 export class AhorcadoComponent {
-  
-  palabras: string[] = ['ANGULAR', 'SUPABASE', 'TYPESCRIPT', 'UTN'];
+
+  palabras: string[] = ['ANGULAR', 'SUPABASE', 'TYPESCRIPT', 'UTN', 'JUEGO'];
   palabraSecreta: string = '';
-  palabraMostrada: string[] = []; 
+  palabraMostrada: string[] = [];
   letrasUsadas: string[] = [];
   intentosRestantes: number = 6;
   mensaje: string = '';
-
-  constructor(private router: Router) {
+  juegoTerminado: boolean = false;
+  constructor(private router: Router, private authService: AuthService) {
     this.iniciarJuego();
   }
 
   iniciarJuego() {
+    this.juegoTerminado = false;
     this.palabraSecreta = this.palabras[Math.floor(Math.random() * this.palabras.length)];
     this.palabraMostrada = Array(this.palabraSecreta.length).fill('_');
     this.letrasUsadas = [];
@@ -31,8 +33,8 @@ export class AhorcadoComponent {
   }
 
   adivinarLetra(letra: string) {
-    if (this.letrasUsadas.includes(letra) || this.intentosRestantes <= 0 || this.mensaje.includes('Ganaste')) {
-      return; 
+    if (this.letrasUsadas.includes(letra) || this.juegoTerminado) {
+      return;
     }
 
     this.letrasUsadas.push(letra);
@@ -53,11 +55,18 @@ export class AhorcadoComponent {
   }
 
   verificarEstadoJuego() {
-    if (this.palabraMostrada.join('') === this.palabraSecreta) {
-      this.mensaje = 'Felicidades, Ganaste!';
-    } 
-    else if (this.intentosRestantes <= 0) {
-      this.mensaje = `Perdiste! La palabra era: ${this.palabraSecreta}`;
+    const gano = this.palabraMostrada.join('') === this.palabraSecreta;
+    const perdio = this.intentosRestantes <= 0;
+
+    if (gano) {
+      this.mensaje = '¡Felicidades, Ganaste!';
+      this.juegoTerminado = true;
+      this.authService.guardarResultado('Ahorcado', this.intentosRestantes, true);
+    }
+    else if (perdio) {
+      this.mensaje = `¡Perdiste! La palabra era: ${this.palabraSecreta}`;
+      this.juegoTerminado = true;
+      this.authService.guardarResultado('Ahorcado', 0, false);
     }
   }
 

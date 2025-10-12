@@ -1,0 +1,40 @@
+.overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay .card {
+  width: 90%;
+  max-width: 500px;
+}
+
+.imagen-ahorcado img {
+  height: 250px; 
+  width: auto;
+}
+
+.palabra-secreta {
+  font-size: 2.5rem; 
+  letter-spacing: 0.5rem; 
+  font-family: monospace;
+}
+
+.botones-letras .btn {
+  width: 45px; 
+  height: 45px;
+  font-weight: bold;
+}
+
+.botones-letras .btn.usada {
+  background-color: #6c757d;
+  color: white;
+  opacity: 0.6;
+}
