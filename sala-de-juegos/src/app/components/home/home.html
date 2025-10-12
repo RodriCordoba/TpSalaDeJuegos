@@ -1,0 +1,18 @@
+<div class="home-container">
+    <h2>Bienvenido a la Sala de Juegos</h2>
+
+    <div *ngIf="userEmail" class="user-info">
+        <p>Sesión activa como: <strong>{{ userEmail }}</strong></p>
+        
+        <button (click)="logout()" class="btn-logout">
+            Cerrar Sesión (Log Out)
+        </button>
+    </div>
+
+    <div class="game-links">
+        <h3>¡Es hora de jugar!</h3>
+        <button [routerLink]="['/juego/ahorcado']">Ahorcado</button>
+        <button [routerLink]="['/juego/mayor-menor']">Mayor o Menor</button>
+        <button [routerLink]="['/quien-soy']">Quién Soy</button>
+    </div>
+</div>

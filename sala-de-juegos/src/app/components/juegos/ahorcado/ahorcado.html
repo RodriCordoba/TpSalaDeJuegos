@@ -1,0 +1,34 @@
+<div class="ahorcado-container">
+    <h2>El Ahorcado</h2>
+
+    <div class="status-panel">
+        <p>Intentos Restantes: <strong>{{ intentosRestantes }}</strong></p>
+        <p class="mensaje-juego">{{ mensaje }}</p>
+    </div>
+
+    <h1 class="palabra-secreta">
+        {{ palabraMostrada.join(' ') }}
+    </h1>
+
+    <div class="imagen-ahorcado">
+    <img [src]="'assets/ahorcado/hangman-' + (6 - intentosRestantes) + '.svg'" alt="Imagen del ahorcado">
+    </div>
+
+    <div class="botones-letras">
+        <button 
+            *ngFor="let letra of abecedario"
+            (click)="adivinarLetra(letra)"
+            [disabled]="letrasUsadas.includes(letra) || intentosRestantes <= 0 || mensaje.includes('Ganaste')"
+            [class.usada]="letrasUsadas.includes(letra)"
+        >
+            {{ letra }}
+        </button>
+    </div>
+
+    <button (click)="iniciarJuego()" class="btn-reiniciar">
+        Reiniciar Juego
+    </button>
+    <button [routerLink]="['/home']" class="btn-volver">
+        Volver al Home
+    </button>
+</div>

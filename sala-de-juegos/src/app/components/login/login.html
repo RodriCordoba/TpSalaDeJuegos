@@ -1,0 +1,30 @@
+<div class="login-container">
+    <h2>Inicio de Sesión</h2>
+
+    <div class="acceso-rapido">
+        <p>Accesos Rápidos:</p>
+        <button (click)="accesoRapido('admin')" class="btn-quick-access admin">Admin</button>
+        <button (click)="accesoRapido('jugador')" class="btn-quick-access jugador">Jugador</button>
+        <button (click)="accesoRapido('invitado')" class="btn-quick-access invitado">Invitado</button>
+    </div>
+    
+    <form (ngSubmit)="handleLogin()">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" required>
+        </div>
+
+        <div *ngIf="mensajeError" class="error-message">
+            {{ mensajeError }}
+        </div>
+
+        <button type="submit" class="btn-login">
+            Ingresar
+        </button>
+    </form>
+</div>
