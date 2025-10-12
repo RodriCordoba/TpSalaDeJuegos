@@ -1,0 +1,60 @@
+<div class="overlay" *ngIf="juegoTerminado">
+  <div class="card text-center shadow-lg">
+    <div class="card-body p-5">
+      <h2 class="card-title mb-3">¡Juego Terminado!</h2>
+      <p class="fs-4 mb-4">{{ mensaje }}</p>
+      <div class="d-grid gap-3">
+        <button (click)="iniciarJuego()" class="btn btn-success btn-lg">Jugar de Nuevo</button>
+        <button [routerLink]="['/home']" class="btn btn-secondary btn-lg">Volver al Home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="mb-4">Preguntados</h2>
+
+      <div *ngIf="!isLoading && personajeCorrecto; else cargandoJuego">
+        <div class="mb-4 d-flex justify-content-center align-items-center" style="min-height: 350px;">
+          <div *ngIf="personajeCorrecto" class="personaje-imagen-container">
+            <img [src]="personajeCorrecto.image" alt="Personaje a adivinar" class="img-fluid shadow-lg">
+          </div>
+        </div>
+
+        <div [ngClass]="{
+              'alert': true,
+              'alert-success': mensaje.includes('Correcto'),
+              'alert-danger': mensaje.includes('Incorrecto'),
+              'alert-info': !mensaje.includes('Correcto') && !mensaje.includes('Incorrecto'),
+              'shadow-sm': true
+            }">
+          <p class="m-0 fs-5">{{ mensaje }}</p>
+          <p class="m-0 fs-3"><strong>Puntaje: {{ puntaje }}</strong></p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 g-3 mt-3" *ngIf="!juegoTerminado && personajeCorrecto">
+          <div class="col" *ngFor="let opcion of opciones">
+            <button
+              (click)="seleccionarRespuesta(opcion)"
+              class="btn btn-lg btn-outline-primary w-100"
+              [disabled]="respuestaEnviada"
+            >
+              {{ opcion }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #cargandoJuego>
+        <div class="d-flex justify-content-center align-items-center" style="min-height: 50vh;">
+          <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</div>

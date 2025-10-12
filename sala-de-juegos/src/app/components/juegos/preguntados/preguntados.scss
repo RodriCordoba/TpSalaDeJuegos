@@ -1,0 +1,29 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay .card {
+  width: 90%;
+  max-width: 500px;
+}
+
+.personaje-imagen-container img {
+  max-height: 400px;  
+  width: 400px;       
+  height: 400px;     
+  object-fit: contain; 
+  border-radius: 15px;
+  image-rendering: pixelated; 
+  background-color: #f8f9fa; 
+  padding: 1rem; 
+  border: 1px solid #dee2e6; 
+}

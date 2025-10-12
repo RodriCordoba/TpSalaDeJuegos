@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
 
@@ -14,7 +14,7 @@ interface Carta {
   selector: 'app-mayor-menor',
   standalone: true,
   imports: [CommonModule, RouterModule, HttpClientModule],
-  templateUrl: './mayor-menor.html',     
+  templateUrl: './mayor-menor.html',
   styleUrls: ['./mayor-menor.scss']
 })
 export class MayorMenorComponent implements OnInit {
@@ -24,17 +24,20 @@ export class MayorMenorComponent implements OnInit {
   puntaje: number = 0;
   mensaje: string = '';
   juegoTerminado: boolean = false;
-
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  isLoading: boolean = true;
+  constructor(private http: HttpClient, private authService: AuthService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.iniciarJuego();
   }
 
   iniciarJuego() {
+    this.isLoading = true;
     this.juegoTerminado = false;
     this.puntaje = 0;
-    this.mensaje = '¿La próxima carta será mayor o menor?';
+    this.mensaje = 'Barajando...';
+    this.cartaActual = null;
+
     this.http.get<any>('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
       .subscribe(res => {
         this.deckId = res.deck_id;
@@ -46,8 +49,11 @@ export class MayorMenorComponent implements OnInit {
     this.http.get<any>(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
       .subscribe(res => {
         if (res.cards && res.cards.length > 0) {
-            this.cartaActual = res.cards[0];
+          this.cartaActual = res.cards[0];
+          this.mensaje = '¿La próxima carta será mayor o menor?';
         }
+        this.isLoading = false;
+        this.cdr.markForCheck(); 
       });
   }
 
@@ -56,50 +62,39 @@ export class MayorMenorComponent implements OnInit {
 
     this.http.get<any>(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
       .subscribe(res => {
-        const proximaCarta = res.cards && res.cards.length > 0 ? res.cards[0] : null;
-
+        const proximaCarta = res.cards?.[0];
         if (proximaCarta && this.cartaActual) {
-            this.cartaSiguiente = proximaCarta;
-            const valorActual = this.getValorCarta(this.cartaActual.value);
-            const valorSiguiente = this.getValorCarta(proximaCarta.value);
+          this.cartaSiguiente = proximaCarta;
+          const valorActual = this.getValorCarta(this.cartaActual.value);
+          const valorSiguiente = this.getValorCarta(proximaCarta.value);
+          const acierto = (eleccion === 'mayor' && valorSiguiente >= valorActual) ||
+                        (eleccion === 'menor' && valorSiguiente <= valorActual);
 
-            let acierto = false;
-            if (eleccion === 'mayor' && valorSiguiente > valorActual) {
-              acierto = true;
-            } else if (eleccion === 'menor' && valorSiguiente < valorActual) {
-              acierto = true;
-            } else if (valorSiguiente === valorActual) {
-              acierto = true;
-            }
-
-            if (acierto) {
-              this.puntaje++;
-              this.mensaje = `¡Correcto! La carta era ${proximaCarta.value}. Adivina la siguiente.`;
-              this.cartaActual = proximaCarta;
-              this.cartaSiguiente = null;
-            } else {
-              this.mensaje = `¡Perdiste! La carta era ${proximaCarta.value}. Tu puntaje final: ${this.puntaje}`;
-              this.terminarJuego();
-            }
-        } else {
-            this.mensaje = '¡Se acabaron las cartas! Tu puntaje final: ' + this.puntaje;
+          if (acierto) {
+            this.puntaje++;
+            this.mensaje = `¡Correcto! Salió un ${proximaCarta.value}.`;
+            this.cartaActual = proximaCarta;
+          } else {
+            this.mensaje = `¡Perdiste! Salió un ${proximaCarta.value}. Puntaje final: ${this.puntaje}`;
             this.terminarJuego();
+          }
+        } else {
+          this.mensaje = '¡Se acabaron las cartas! Puntaje final: ' + this.puntaje;
+          this.terminarJuego();
         }
+        this.cdr.markForCheck();
       });
   }
 
   terminarJuego() {
     this.juegoTerminado = true;
-    this.authService.guardarResultado('Mayor o Menor', this.puntaje, this.puntaje > 0);
+    if (this.puntaje > 0) {
+      this.authService.guardarResultado('Mayor o Menor', this.puntaje, true);
+    }
   }
 
   getValorCarta(valor: string): number {
-    switch (valor) {
-      case 'ACE': return 14;
-      case 'KING': return 13;
-      case 'QUEEN': return 12;
-      case 'JACK': return 11;
-      default: return parseInt(valor, 10);
-    }
+    const valores: { [key: string]: number } = { 'ACE': 14, 'KING': 13, 'QUEEN': 12, 'JACK': 11 };
+    return valores[valor] || parseInt(valor, 10);
   }
 }

@@ -31,6 +31,11 @@ export const routes: Routes = [
         loadComponent: () => import('./components/chat/chat').then(m => m.ChatComponent),
         canActivate: [authGuard]
     },
+    {
+        path: 'juego/preguntados',
+        loadComponent: () => import('./components/juegos/preguntados/preguntados').then(m => m.PreguntadosComponent),
+        canActivate: [authGuard]
+    },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' }, 
     { path: '**', redirectTo: '/login' }, 
