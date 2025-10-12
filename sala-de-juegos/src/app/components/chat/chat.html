@@ -1,0 +1,31 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Sala de Chat</h4>
+          <button [routerLink]="['/home']" class="btn btn-outline-light">Volver al Home</button>
+        </div>
+        <div class="card-body chat-box" #chatBox>
+          <div *ngFor="let mensaje of mensajes" class="mb-3">
+            <div class="mensaje" [class.propio]="mensaje.user_email === currentUserEmail">
+              <div class="mensaje-header">
+                <strong>{{ mensaje.user_email }}</strong>
+                <span class="text-muted small">{{ mensaje.created_at | date:'shortTime' }}</span>
+              </div>
+              <div class="mensaje-cuerpo">
+                <p class="mb-0">{{ mensaje.texto }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <form (ngSubmit)="enviarMensaje()" class="d-flex">
+            <input type="text" class="form-control me-2" placeholder="Escribe un mensaje..." [(ngModel)]="nuevoMensaje" name="nuevoMensaje">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

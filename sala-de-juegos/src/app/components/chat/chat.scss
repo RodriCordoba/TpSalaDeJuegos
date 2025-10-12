@@ -1,0 +1,38 @@
+.chat-box {
+  height: 60vh;
+  overflow-y: auto; 
+}
+
+.mensaje {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 75%;
+  word-wrap: break-word;
+  background-color: #e9ecef;
+  float: left;
+  clear: both;
+  margin-bottom: 10px;
+}
+
+.mensaje.propio {
+  background-color: #0d6efd;
+  color: white;
+  float: right;
+}
+
+.mensaje-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+
+  strong {
+    font-size: 0.9em;
+  }
+  span {
+    font-size: 0.8em;
+  }
+}
+
+.mensaje.propio .mensaje-header {
+  color: #f0f0f0;
+}

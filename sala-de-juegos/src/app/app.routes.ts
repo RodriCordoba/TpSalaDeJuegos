@@ -26,6 +26,11 @@ export const routes: Routes = [
         loadComponent: () => import('./components/juegos/mayor-menor/mayor-menor').then(m => m.MayorMenorComponent),
         canActivate: [authGuard]
     },
+    {
+        path: 'chat',
+        loadComponent: () => import('./components/chat/chat').then(m => m.ChatComponent),
+        canActivate: [authGuard]
+    },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' }, 
     { path: '**', redirectTo: '/login' }, 

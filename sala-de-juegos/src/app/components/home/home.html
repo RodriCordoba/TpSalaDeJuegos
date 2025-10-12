@@ -1,18 +1,32 @@
-<div class="home-container">
-    <h2>Bienvenido a la Sala de Juegos</h2>
+<div class="container text-center mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
 
-    <div *ngIf="userEmail" class="user-info">
-        <p>Sesión activa como: <strong>{{ userEmail }}</strong></p>
-        
-        <button (click)="logout()" class="btn-logout">
-            Cerrar Sesión (Log Out)
-        </button>
-    </div>
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white">
+          <h2>Bienvenido a la Sala de Juegos</h2>
+        </div>
+        <div class="card-body p-4">
 
-    <div class="game-links">
-        <h3>¡Es hora de jugar!</h3>
-        <button [routerLink]="['/juego/ahorcado']">Ahorcado</button>
-        <button [routerLink]="['/juego/mayor-menor']">Mayor o Menor</button>
-        <button [routerLink]="['/quien-soy']">Quién Soy</button>
+          <div *ngIf="userEmail" class="alert alert-success">
+            <p class="mb-2">Sesión activa como: <strong>{{ userEmail }}</strong></p>
+            <button (click)="logout()" class="btn btn-sm btn-outline-danger">
+              Cerrar Sesión
+            </button>
+          </div>
+
+          <h3 class="my-4">¡Es hora de jugar!</h3>
+
+          <div class="d-grid gap-3 col-10 mx-auto">
+            <button [routerLink]="['/juego/ahorcado']" class="btn btn-primary btn-lg">Ahorcado</button>
+            <button [routerLink]="['/juego/mayor-menor']" class="btn btn-primary btn-lg">Mayor o Menor</button>
+
+            <button [routerLink]="['/chat']" class="btn btn-info btn-lg text-dark">Sala de Chat</button>
+            <button [routerLink]="['/quien-soy']" class="btn btn-secondary btn-lg mt-3">Quién Soy</button>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
