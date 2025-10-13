@@ -27,16 +27,21 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-        path: 'chat',
-        loadComponent: () => import('./components/chat/chat').then(m => m.ChatComponent),
-        canActivate: [authGuard]
-    },
-    {
         path: 'juego/preguntados',
         loadComponent: () => import('./components/juegos/preguntados/preguntados').then(m => m.PreguntadosComponent),
         canActivate: [authGuard]
     },
-
+    {
+        path: 'juego/simon',
+        loadComponent: () => import('./components/juegos/simon/simon').then(m => m.SimonComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'chat',
+        loadComponent: () => import('./components/chat/chat').then(m => m.ChatComponent),
+        canActivate: [authGuard]
+    },
+    
     { path: '', redirectTo: '/login', pathMatch: 'full' }, 
     { path: '**', redirectTo: '/login' }, 
 ];

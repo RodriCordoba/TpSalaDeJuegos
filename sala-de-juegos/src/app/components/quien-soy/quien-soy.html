@@ -1,50 +1,54 @@
-<div class="quien-soy-container">
-  <div class="header-section">
-    <h2>Quién Soy</h2>
-  </div>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
 
-  <div class="info-card">
-    <div class="photo-container">
-      <img 
-        src="assets/foto mia.jpg" 
-        alt="Foto de Rodrigo Córdoba" 
-        class="profile-photo"
-      >
-    </div>
-    <div class="text-content">
-      <h3>Rodrigo Córdoba</h3>
-      <p>
-        Soy Rodrigo Córdoba, tengo 23 años. Actualmente me encuentro cursando las últimas materias de la 
-        <strong>Tecnicatura Universitaria en Programación de la UTN</strong>.
-      </p>
-      <p>
-        Trabajo en el área de mesa de ayuda en el <strong>BNA</strong>, donde puedo aplicar y potenciar algunos de los conocimientos adquiridos a lo largo de la carrera.
-      </p>
-    </div>
-  </div>
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-dark text-white text-center py-3">
+          <h2 class="mb-0">Quién Soy</h2>
+        </div>
+        <div class="card-body p-4 p-md-5">
 
-  <div class="game-description">
-    <h3>Mi Juego Propio: Simón (Memoria de Secuencias)</h3>
-    <p>
-      Voy a implementar como juego propio el <strong>Simón</strong>, un juego clásico para medir las capacidades cognitivas y motrices del jugador.
-    </p>
+          <div class="row align-items-center mb-4">
+            <div class="col-md-4 text-center mb-4 mb-md-0">
+              <img src="assets/foto mia.jpg" alt="Foto de Rodrigo Córdoba" class="img-fluid rounded-circle border border-4 border-primary shadow" style="max-width: 200px;">
+            </div>
+            <div class="col-md-8">
+              <h3 class="display-6">Rodrigo Córdoba</h3>
+              <p class="lead">
+                Tengo 23 años y estoy finalizando la <strong>Tecnicatura Universitaria en Programación</strong> en la UTN.
+              </p>
+              <p>
+                Actualmente trabajo en la mesa de ayuda del <strong>BNA</strong>, donde aplico y desarrollo mis conocimientos técnicos.
+              </p>
+            </div>
+          </div>
 
-    <h4>Objetivo:</h4>
-    <ul>
-      <li>El objetivo es reproducir secuencias de colores y sonidos que la máquina va mostrando de manera progresiva.</li>
-    </ul>
+          <hr class="my-4">
 
-    <h4>Mecánica del Juego:</h4>
-    <ol>
-      <li>Al comenzar, el juego enciende uno de los botones de color (acompañado de un sonido).</li>
-      <li>El jugador debe repetir el mismo color presionando el botón correspondiente.</li>
-      <li>En la siguiente ronda, el juego repite la primera secuencia y agrega un color nuevo.</li>
-      <li>El jugador debe repetir toda la secuencia en el orden correcto.</li>
-      <li>Cada vez que se acierta, la secuencia se hace más larga y difícil.</li>
-    </ol>
+          <div class="game-description">
+            <h3 class="mb-3">Mi Juego Propio: Simón</h3>
+            <p>
+              Implementé el clásico juego <strong>Simón</strong> para poner a prueba la memoria y los reflejos del jugador, siguiendo secuencias de colores que aumentan progresivamente su dificultad y con un tiempo límite para responder.
+            </p>
 
-    <div class="game-over-info">
-      <strong>Fin del Juego:</strong> El juego termina cuando el jugador se equivoca en el orden o elige un color incorrecto.
+            <h4 class="mt-4">Mecánica del Juego:</h4>
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item">El juego muestra un color.</li>
+              <li class="list-group-item">El jugador debe repetir la selección.</li>
+              <li class="list-group-item">El juego repite la secuencia y añade un nuevo color.</li>
+              <li class="list-group-item">El jugador debe repetir la nueva secuencia completa.</li>
+              <li class="list-group-item">La secuencia se hace más larga con cada acierto.</li>
+            </ol>
+
+            <div class="alert alert-danger mt-4" role="alert">
+              <h5 class="alert-heading fw-bold">¡Fin del Juego!</h5>
+              La partida termina si el jugador se equivoca de color o se acaba el tiempo para responder.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

@@ -1,0 +1,46 @@
+<div class="overlay" *ngIf="juegoTerminado">
+    <div class="card text-center shadow-lg">
+        <div class="card-body p-5">
+            <h2 class="card-title mb-3">¡Juego Terminado!</h2>
+            <p class="fs-4 mb-4">{{ mensaje }}</p>
+            <div class="d-grid gap-3">
+                <button (click)="iniciarJuego()" class="btn btn-success btn-lg">Jugar de Nuevo</button>
+                <button [routerLink]="['/home']" class="btn btn-secondary btn-lg">Volver al Home</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="mb-4">Juego Simon</h2>
+
+            <div *ngIf="!juegoIniciado; else vistaJuego">
+                <div class="card shadow-sm p-5">
+                    <p class="fs-4">¿Podrás seguir la secuencia de colores?</p>
+                    <div class="d-grid gap-2 col-8 mx-auto mt-4">
+                        <button (click)="iniciarJuego()" class="btn btn-primary btn-lg">¡Empezar a Jugar!</button>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #vistaJuego>
+                <div class="alert alert-info shadow-sm mb-4">
+                    <p class="m-0 fs-4">{{ mensaje }}</p>
+                </div>
+
+                <div class="simon-container shadow-lg">
+                    <div class="simon-boton verde" [class.activo]="colorActivo === 'verde'" (click)="manejarClick('verde')"></div>
+                    <div class="simon-boton rojo" [class.activo]="colorActivo === 'rojo'" (click)="manejarClick('rojo')"></div>
+                    <div class="simon-boton amarillo" [class.activo]="colorActivo === 'amarillo'" (click)="manejarClick('amarillo')"></div>
+                    <div class="simon-boton azul" [class.activo]="colorActivo === 'azul'" (click)="manejarClick('azul')"></div>
+                    <div class="centro-simon">
+                        <h3 class="m-0">Nivel</h3>
+                        <p class="fs-1 m-0">{{ nivel }}</p>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
