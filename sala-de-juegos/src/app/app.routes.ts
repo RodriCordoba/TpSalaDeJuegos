@@ -41,6 +41,16 @@ export const routes: Routes = [
         loadComponent: () => import('./components/chat/chat').then(m => m.ChatComponent),
         canActivate: [authGuard]
     },
+    {
+        path: 'resultados',
+        loadComponent: () => import('./components/resultados/resultados').then(m => m.ResultadosComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'encuesta',
+        loadComponent: () => import('./components/encuesta/encuesta').then(m => m.EncuestaComponent),
+        canActivate: [authGuard]
+    },
     
     { path: '', redirectTo: '/login', pathMatch: 'full' }, 
     { path: '**', redirectTo: '/login' }, 

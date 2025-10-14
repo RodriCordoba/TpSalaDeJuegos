@@ -1,0 +1,51 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white text-center">
+          <h2 class="mb-0">Tabla de Puntuaciones</h2>
+        </div>
+        <div class="card-body p-0">
+          <div *ngIf="isLoading; else tablaResultados" class="text-center p-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2">Cargando resultados...</p>
+          </div>
+
+          <ng-template #tablaResultados>
+            <div *ngIf="resultados.length > 0; else noResultados" class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Juego</th>
+                    <th scope="col">Puntaje</th>
+                    <th scope="col">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let resultado of resultados">
+                    <td>{{ resultado.email_usuario }}</td>
+                    <td>{{ resultado.juego }}</td>
+                    <td><span class="badge bg-success fs-6">{{ resultado.puntaje }}</span></td>
+                    <td>{{ resultado.fecha_juego | date:'dd/MM/yyyy HH:mm' }} hs</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ng-template #noResultados>
+              <div class="alert alert-info m-4 text-center">
+                Aún no hay resultados registrados. ¡Juega una partida para aparecer aquí!
+              </div>
+            </ng-template>
+          </ng-template>
+        </div>
+      </div>
+       <div class="text-center mt-4">
+          <button [routerLink]="['/home']" class="btn btn-secondary">Volver al Home</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <div *ngIf="enviadoConExito" class="alert alert-success text-center">
+        <h4>{{ mensaje }}</h4>
+        <p>Redirigiendo al Home en 3 segundos...</p>
+      </div>
+
+      <div class="card shadow-sm" *ngIf="!enviadoConExito">
+        <div class="card-header bg-dark text-white text-center">
+          <h2 class="mb-0">Encuesta de Satisfacción</h2>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="encuestaForm" (ngSubmit)="enviarEncuesta()" novalidate>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" formControlName="nombre" class="form-control"
+                       [class.is-invalid]="encuestaForm.get('nombre')?.invalid && encuestaForm.get('nombre')?.touched">
+                <div *ngIf="encuestaForm.get('nombre')?.errors?.['required']" class="invalid-feedback">El nombre es requerido.</div>
+                <div *ngIf="encuestaForm.get('nombre')?.errors?.['pattern']" class="invalid-feedback">Solo se permiten letras.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" id="apellido" formControlName="apellido" class="form-control"
+                       [class.is-invalid]="encuestaForm.get('apellido')?.invalid && encuestaForm.get('apellido')?.touched">
+                <div class="invalid-feedback">El apellido es requerido.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="edad" class="form-label">Edad (18-99)</label>
+                <input type="number" id="edad" formControlName="edad" class="form-control"
+                       [class.is-invalid]="encuestaForm.get('edad')?.invalid && encuestaForm.get('edad')?.touched">
+                <div *ngIf="encuestaForm.get('edad')?.errors?.['required']" class="invalid-feedback">La edad es requerida.</div>
+                <div *ngIf="encuestaForm.get('edad')?.errors?.['min'] || encuestaForm.get('edad')?.errors?.['max']" class="invalid-feedback">La edad debe estar entre 18 y 99.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="telefono" class="form-label">Teléfono (10 dígitos)</label>
+                <input type="text" id="telefono" formControlName="telefono" class="form-control"
+                       [class.is-invalid]="encuestaForm.get('telefono')?.invalid && encuestaForm.get('telefono')?.touched">
+                <div *ngIf="encuestaForm.get('telefono')?.errors?.['required']" class="invalid-feedback">El teléfono es requerido.</div>
+                <div *ngIf="encuestaForm.get('telefono')?.errors?.['pattern']" class="invalid-feedback">Debe contener 10 dígitos numéricos.</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">¿Cuál es tu juego favorito?</label>
+              <select formControlName="juegoFavorito" class="form-select" [class.is-invalid]="encuestaForm.get('juegoFavorito')?.invalid && encuestaForm.get('juegoFavorito')?.touched">
+                <option value="" disabled>Selecciona un juego</option>
+                <option value="Ahorcado">Ahorcado</option>
+                <option value="Mayor o Menor">Mayor o Menor</option>
+                <option value="Preguntados">Preguntados</option>
+                <option value="Simon">Simon</option>
+              </select>
+              <div class="invalid-feedback">Debes seleccionar un juego.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">¿Cómo calificarías la aplicación? (1 = Malo, 5 = Excelente)</label>
+              <div class="text-center">
+                <div class="btn-group" role="group">
+                  <input type="radio" class="btn-check" formControlName="puntuacionApp" id="p1" value="1"><label class="btn btn-outline-primary" for="p1">1</label>
+                  <input type="radio" class="btn-check" formControlName="puntuacionApp" id="p2" value="2"><label class="btn btn-outline-primary" for="p2">2</label>
+                  <input type="radio" class="btn-check" formControlName="puntuacionApp" id="p3" value="3"><label class="btn btn-outline-primary" for="p3">3</label>
+                  <input type="radio" class="btn-check" formControlName="puntuacionApp" id="p4" value="4"><label class="btn btn-outline-primary" for="p4">4</label>
+                  <input type="radio" class="btn-check" formControlName="puntuacionApp" id="p5" value="5" checked><label class="btn btn-outline-primary" for="p5">5</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="mejoraria" class="form-label">¿Qué mejorarías de la aplicación?</label>
+              <textarea id="mejoraria" formControlName="mejoraria" class="form-control" rows="3"
+                        [class.is-invalid]="encuestaForm.get('mejoraria')?.invalid && encuestaForm.get('mejoraria')?.touched"></textarea>
+              <div class="invalid-feedback">Este campo es requerido.</div>
+            </div>
+
+            <div class="form-check mb-3">
+              <input type="checkbox" formControlName="acuerdoTerminos" id="acuerdoTerminos" class="form-check-input"
+                     [class.is-invalid]="encuestaForm.get('acuerdoTerminos')?.invalid && encuestaForm.get('acuerdoTerminos')?.touched">
+              <label class="form-check-label" for="acuerdoTerminos">Acepto los términos y condiciones.</label>
+              <div class="invalid-feedback">Debes aceptar los términos.</div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button type="button" [routerLink]="['/home']" class="btn btn-secondary">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="encuestaForm.invalid">Enviar Encuesta</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

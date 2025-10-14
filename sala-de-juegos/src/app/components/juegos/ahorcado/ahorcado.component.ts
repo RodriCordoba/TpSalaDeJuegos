@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/auth.service'; 
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-ahorcado',
@@ -12,6 +12,8 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class AhorcadoComponent {
 
+  abecedario: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
   palabras: string[] = ['ANGULAR', 'SUPABASE', 'TYPESCRIPT', 'UTN', 'JUEGO'];
   palabraSecreta: string = '';
   palabraMostrada: string[] = [];
@@ -19,6 +21,7 @@ export class AhorcadoComponent {
   intentosRestantes: number = 6;
   mensaje: string = '';
   juegoTerminado: boolean = false;
+
   constructor(private router: Router, private authService: AuthService) {
     this.iniciarJuego();
   }
@@ -62,15 +65,14 @@ export class AhorcadoComponent {
       this.mensaje = '¡Felicidades, Ganaste!';
       this.juegoTerminado = true;
       this.authService.guardarResultado('Ahorcado', this.intentosRestantes, true);
-    }
-    else if (perdio) {
+    } else if (perdio) {
       this.mensaje = `¡Perdiste! La palabra era: ${this.palabraSecreta}`;
       this.juegoTerminado = true;
       this.authService.guardarResultado('Ahorcado', 0, false);
     }
   }
 
-  get abecedario(): string[] {
-    return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  getImagenAhorcado() {
+    return `assets/ahorcado/hangman-${6 - this.intentosRestantes}.svg`;
   }
 }

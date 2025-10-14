@@ -119,7 +119,7 @@ export class SimonComponent implements OnInit {
     this.juegoTerminado = true;
     this.mensaje = `${razon} Alcanzaste el nivel ${this.nivel}.`;
     if (this.nivel > 1) {
-      this.authService.guardarResultado('Simón', this.nivel - 1, true);
+      this.authService.guardarResultado('Simon', this.nivel - 1, true);
     }
     this.cdr.markForCheck();
   }
