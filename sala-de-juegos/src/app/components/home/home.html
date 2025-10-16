@@ -8,22 +8,14 @@
         </div>
         <div class="card-body p-4">
 
-          <div *ngIf="userEmail" class="alert alert-success">
-            <p class="mb-2">Sesión activa como: <strong>{{ userEmail }}</strong></p>
-            <button (click)="logout()" class="btn btn-sm btn-outline-danger">
-              Cerrar Sesión
-            </button>
-          </div>
-
           <h3 class="my-4">¡Es hora de jugar!</h3>
 
           <div class="d-grid gap-3 col-10 mx-auto">
             <button [routerLink]="['/juego/ahorcado']" class="btn btn-primary btn-lg">Ahorcado</button>
             <button [routerLink]="['/juego/mayor-menor']" class="btn btn-primary btn-lg">Mayor o Menor</button>
             <button [routerLink]="['/juego/preguntados']" class="btn btn-primary btn-lg">Preguntados</button>
-            <button [routerLink]="['/juego/simon']" class="btn btn-primary btn-lg">Simon</button> 
+            <button [routerLink]="['/juego/simon']" class="btn btn-primary btn-lg">Simon</button>
             <button [routerLink]="['/resultados']" class="btn btn-warning btn-lg text-dark">Ver Puntuaciones</button>
-            
             <button [routerLink]="['/chat']" class="btn btn-info btn-lg text-dark">Sala de Chat</button>
             <button [routerLink]="['/encuesta']" class="btn btn-info btn-lg text-dark">Llenar Encuesta</button>
             <button [routerLink]="['/quien-soy']" class="btn btn-secondary btn-lg mt-3">Quién Soy</button>

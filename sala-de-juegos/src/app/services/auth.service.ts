@@ -48,7 +48,7 @@ export class AuthService {
         .from('resultados')
         .insert({
           user_id: session.user.id,
-          email_usuario: session.user.email, 
+          email_usuario: session.user.email,
           juego: juego,
           puntaje: puntaje,
           victoria: gano,
@@ -80,7 +80,7 @@ export class AuthService {
 
     if (session?.user) {
       const { data, error } = await supabase
-        .from('encuestas') 
+        .from('encuestas')
         .insert({
           user_id: session.user.id,
           email_usuario: session.user.email,
@@ -88,7 +88,7 @@ export class AuthService {
           apellido: formData.apellido,
           edad: formData.edad,
           telefono: formData.telefono,
-          juego_favorito: formData.juegoFavorito, 
+          juego_favorito: formData.juegoFavorito,
           puntuacion_app: formData.puntuacionApp,
           mejoraria: formData.mejoraria,
           fecha_encuesta: new Date().toISOString()
@@ -118,7 +118,7 @@ export class AuthService {
         .insert({
           texto: texto,
           user_id: session.user.id,
-          email_usuario: session.user.email 
+          user_email: session.user.email 
         });
     }
     return null;
